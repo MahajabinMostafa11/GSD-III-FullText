@@ -11,13 +11,19 @@
       "Bash(git -C wiki/GSD-III-FullText.wiki log:*)",
       "Bash(git -C wiki/GSD-III-FullText.wiki add:*)",
       "Bash(git -C wiki/GSD-III-FullText.wiki commit *)",
+      "Bash(git -C wiki/GSD-III-FullText.wiki tag *)",
       "Bash(./scripts/kg/build-graph.sh)",
       "Bash(./wiki/init-wiki.sh)",
       "Bash(./wiki/init-wiki.sh *)",
       "Bash(./wiki/agents/claude-code/setup.sh)",
       "Bash(./wiki/agents/claude-code/setup.sh *)",
       "Bash(.venv/bin/python *)",
-      "Bash(uv run python *)"
+      "Bash(uv run python *)",
+      "Bash(python3 scripts/kg/lookup-ontology-term.py *)",
+      "Bash(python3 scripts/show-record.py *)",
+      "Bash(python3 scripts/check-batch-coverage.py *)",
+      "Bash(python3 scripts/extract-fulltext.py *)",
+      "Bash(python3 scripts/match-fulltext.py *)"
     ]
   }
 }
