@@ -3,7 +3,7 @@
 
 Reads `record_key:` and `ingestion_depth:` from the frontmatter of every page
 in the wiki and compares them with the batch file. Records whose full text is
-readable (quality ok or low-text) must have a `full-text` page.
+readable (quality ok) must have a `full-text` page.
 
 Usage:
     python3 scripts/check-batch-coverage.py "raw sources/batches/batch-1.csv" wiki/GSD-III-FullText.wiki
@@ -29,7 +29,7 @@ def readable_fulltext():
     if not report.exists():
         return None
     df = pd.read_csv(report, dtype=str, keep_default_na=False)
-    return set(df[df["quality"].isin(["ok", "low-text"])]["record_key"])
+    return set(df[df["quality"] == "ok"]["record_key"])
 
 
 def page_keys(wiki_dir):

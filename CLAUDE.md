@@ -89,13 +89,27 @@ schema; where the two disagree, this file wins. The underlying pattern is
 - `ingestion_depth:` on every source-summary page says what was actually
   read:
   - `full-text` when the paper's extracted text was read in full. Required
-    whenever the record has full text of quality `ok` or `low-text`.
+    whenever the record has full text of quality `ok`.
   - `abstract` when there is no full text, or its text could not be read
-    (quality `no-text` or `error`, e.g. an image-only scan). Tag such pages
-    `status/fulltext-unreadable` and say so on the page.
+    (quality `no-text`, `low-text` or `error`: an image-only scan, or a scan
+    whose only text is a cover sheet). Tag such pages
+    `status/fulltext-unreadable` and say so on the page. Scanned papers are
+    listed in `raw sources/fulltext-scanned.csv`; OCR for them is not used
+    for now.
+  - `abstract` also when the paper is not written in English (quality
+    `non-english`). Its full text is not used at all; the page is built from
+    the record's English title and abstract, tagged
+    `status/fulltext-non-english`, and says so. The paper still gets its page.
   - `metadata-only` when there is neither full text nor a usable abstract in
     any field; the page says plainly that only bibliographic information was
     available.
+- If OCR is adopted later: OCR'd papers (marked `ocr` in the text header) can contain
+  misread characters. Before stating a subtype, Roman numeral, number, dose
+  or variant taken from OCR'd text, and for every spot listed on the header's
+  `# ocr-check:` line, view that page of the original PDF (the Read tool on
+  the PDF path printed by `scripts/show-record.py`, with `pages: <N>`) and
+  use what the page image shows. If it is still unclear, leave the detail out
+  of the page rather than guess.
 - An abstract that is still cut off after checking Raw Data gets the
   `status/truncated-abstract` tag when the page relies on it.
 - Full-text pages carry the pointer fields `fulltext:` (the PDF's Drive path

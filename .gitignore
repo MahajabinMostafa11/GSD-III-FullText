@@ -32,3 +32,4 @@ __pycache__
 # Rebuild with scripts/extract-fulltext.py.
 .fulltext-cache/
 .fulltext-dir
+.fulltext-ocr/

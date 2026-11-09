@@ -72,16 +72,23 @@ those files decide.
    Claude Enrichment notes (LLM-generated, not evidence), the Raw Data, and,
    last, the paper's full text with its quality flag.
 2. Decide the depth:
-   - full text present with quality `ok` or `low-text`: read all of it and
+   - full text present with quality `ok`: read all of it and
      write a `full-text` page. Use the methods, results, tables and
      discussion; ignore the reference list except to attribute what the
      authors cite. Add the `fulltext:` pointer fields.
-   - full text listed but `no-text` or `error`, or no full text: an
+   - full text listed but `no-text`, `low-text` or `error` (a scan), or no full text: an
      `abstract` page from the fullest abstract version (tag
      `status/fulltext-unreadable` in the first case).
+   - full text marked `non-english`: do not read or use it. Write an
+     `abstract` page from the record's abstract, tagged
+     `status/fulltext-non-english`.
    - no full text and no abstract: `metadata-only`.
    If the page relies on an abstract that is still cut off, tag
    `status/truncated-abstract`.
+   If the full text is OCR'd (its header says `ocr`), confirm every spot on
+   its `# ocr-check:` line, and any subtype, number, dose or variant you take
+   from it, by viewing that page of the original PDF (Read tool, the PDF path
+   shown by `show-record.py`, `pages: <N>`). Leave out what stays unclear.
 3. Write the source-summary page with the 11 sections from `CLAUDE.md`, in
    order, and every required frontmatter field from the schema, including
    `record_key:` copied exactly from the record.
@@ -124,7 +131,7 @@ git -C wiki/GSD-III-FullText.wiki commit -m "ingest: batch N records <i>-<j>"
    - by: <git config user.name> via claude-code
    - model: <your true model identifier>
    - records ingested: <n>; pages created: <n>; pages updated: <n>
-   - flags: needs-review <n>, needs-ontology <n>, truncated-abstract <n>, metadata-only <n>, full-text <n>, fulltext-unreadable <n>, possible-duplicate <n>
+   - flags: needs-review <n>, needs-ontology <n>, truncated-abstract <n>, metadata-only <n>, full-text <n>, fulltext-unreadable <n>, fulltext-non-english <n>, possible-duplicate <n>
    - new claims: <n>; claims extended: <n>
    - questions for the user: <list, or "none">
    ```

@@ -114,12 +114,19 @@ def show_fulltext(key):
             if m["record_key"] == key:
                 quality = m["quality"]
     print(f"PDF: {entry['pdf_filename']}   pointer: gdrive:{entry['drive_path']}   quality: {quality}")
+    cfg = Path(".fulltext-dir")
+    if cfg.exists():
+        print(f"Original PDF on this machine: {Path(cfg.read_text().strip()).expanduser() / entry['pdf_filename']}")
     text_file = Path(".fulltext-cache") / (re.sub(r"[^A-Za-z0-9._-]", "_", key) + ".txt")
     if not text_file.exists():
         print("Full text not extracted yet. Run: python3 scripts/extract-fulltext.py --batch <N>")
         return
-    if quality in ("no-text", "error"):
+    if quality in ("no-text", "low-text", "error"):
         print("The PDF has no readable text: write an abstract page tagged status/fulltext-unreadable.")
+        return
+    if quality == "non-english":
+        print("The paper is not in English: its full text is not used. Write an abstract page "
+              "tagged status/fulltext-non-english.")
         return
     print(text_file.read_text(encoding="utf-8"))
 
