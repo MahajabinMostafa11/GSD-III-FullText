@@ -23,7 +23,9 @@
       "Bash(python3 scripts/show-record.py *)",
       "Bash(python3 scripts/check-batch-coverage.py *)",
       "Bash(python3 scripts/extract-fulltext.py *)",
-      "Bash(python3 scripts/match-fulltext.py *)"
+      "Bash(python3 scripts/match-fulltext.py *)",
+      "Bash(python3 scripts/check-page-structure.py *)",
+      "Bash(python3 scripts/wiki-reciprocity.py *)"
     ]
   }
 }

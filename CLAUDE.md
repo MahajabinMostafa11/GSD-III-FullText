@@ -150,11 +150,21 @@ Every source-summary page uses these sections, in this order:
 6. **Authors' conclusions**.
 7. **Limitations and caveats**: those the source states, plus obvious scope
    limits (e.g. single case, small sample).
-8. **Connections**: links to the concept and entity pages this paper informs.
+8. **Connections**: links to the concept and entity pages this paper informs,
+   and a "Later papers in this wiki" line listing later source-summary pages
+   that link to this one (kept up to date as later papers arrive).
 9. **Ontology terms**: diseases (MONDO), and phenotypes and genes where clear.
 10. **Source link**.
 11. **Record metadata**: every remaining field of the corpus record, grouped
     as described under Sources, so no field is dropped.
+
+The 11 sections are fixed. Every source-summary page has all of them, with
+exactly these headings, in this order: none merged, none renamed, none added.
+A section with nothing to report says so in one line (for example "Not
+stated in the abstract."). A record that duplicates another keeps the same 11
+sections: explain the duplication under Citation, link the companion page
+under Connections, and fill the other sections from this record as usual.
+`scripts/check-page-structure.py` enforces this.
 
 On concept and synthesis pages, attribute every claim to the paper it comes
 from, with a link to that paper's page. When papers disagree, show each one's
@@ -196,7 +206,9 @@ Name source-summary pages `Surname-Year-Short-Topic.md`.
   `scripts/show-record.py`, write the paper's page, update the concept and
   entity pages it affects, then move on.
 - A batch is finished only when `scripts/check-batch-coverage.py` reports no
-  missing and no doubled records.
+  missing and no doubled records, `scripts/check-page-structure.py` reports
+  no failing pages, and `scripts/wiki-reciprocity.py` reports no one-way
+  links (see the schema's Cross-Referencing rules for hub pages).
 - Do not stop to discuss individual papers with the user during a batch. Keep
   questions in a list and report them in the batch's log entry.
 - After each batch: run `/wiki-lint`, fix what it finds, update the index and

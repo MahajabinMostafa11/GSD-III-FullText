@@ -118,7 +118,19 @@ git -C wiki/GSD-III-FullText.wiki commit -m "ingest: batch N records <i>-<j>"
    python3 scripts/check-batch-coverage.py "raw sources/batches/batch-N.csv" wiki/GSD-III-FullText.wiki
    ```
 
-2. Run `/wiki-lint` and fix what it finds.
+2. Check page structure and link reciprocity, and fix until both report
+   nothing:
+
+   ```bash
+   python3 scripts/check-page-structure.py wiki/GSD-III-FullText.wiki
+   python3 scripts/wiki-reciprocity.py wiki/GSD-III-FullText.wiki
+   ```
+
+   Fix one-way links as the schema's Cross-Referencing section says: add the
+   paper to the target's claims or its "Further papers" line, add later
+   papers to the earlier paper's "Later papers in this wiki" line, and never
+   list citing pages on a `hub: true` page. Then run `/wiki-lint` and fix
+   what it finds.
 3. Run the Verification Gate (`wiki/agents/verification-gate.md`) over the
    pages created or edited in this batch.
 4. Update `index_GSD-III-FullText.md` and the Categories section of
