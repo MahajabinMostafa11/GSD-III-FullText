@@ -33,3 +33,6 @@ __pycache__
 .fulltext-cache/
 .fulltext-dir
 .fulltext-ocr/
+
+# Per-batch working files (flags, questions)
+.batch-work/

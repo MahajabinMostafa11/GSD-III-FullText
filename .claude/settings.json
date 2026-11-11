@@ -25,7 +25,14 @@
       "Bash(python3 scripts/extract-fulltext.py *)",
       "Bash(python3 scripts/match-fulltext.py *)",
       "Bash(python3 scripts/check-page-structure.py *)",
-      "Bash(python3 scripts/wiki-reciprocity.py *)"
+      "Bash(python3 scripts/wiki-reciprocity.py *)",
+      "Bash(python3 scripts/update-backlinks.py *)",
+      "Bash(python3 scripts/claim-counts.py *)",
+      "Bash(python3 scripts/paper-brief.py *)",
+      "Bash(python3 scripts/related-pages.py *)",
+      "Bash(python3 scripts/precheck-batch.py *)",
+      "Bash(python3 scripts/build-index.py *)",
+      "Bash(mkdir -p .batch-work)"
     ]
   }
 }

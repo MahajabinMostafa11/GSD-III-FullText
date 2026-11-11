@@ -16,7 +16,7 @@ Walk `wiki/GSD-III-FullText.wiki/` and report on each of the following. For each
 5. **`type: untyped` pages.** Review each and assign a proper type if now obvious (`concept`, `entity`, `source-summary`, `synthesis`, `index`, `comparison`).
 6. **Missing concept pages.** Concepts mentioned in multiple body texts that do not have their own page. Promote to standalone pages with proper frontmatter.
 7. **Missing cross-references (bidirectional).** If A links to B, B should link back to A unless one is hub-and-spoke by design. Enumerate these mechanically rather than by eye: run `python3 scripts/wiki-reciprocity.py wiki/GSD-III-FullText.wiki/` — it lists every one-way link (`A -> B` where B does not reference A back by any means), exempting special files and pages marked `hub: true` in frontmatter. Fix each as the schema's Cross-Referencing section says: hub pages (theme hubs, disease entity pages, the disease's own gene and enzyme pages) carry `hub: true` and are exempt; a concept or treatment page lists the paper in a claim or on its "Further papers" line; an earlier paper lists later papers on its "Later papers in this wiki" line; any other target links back in Related or See also. Also run `python3 scripts/check-page-structure.py wiki/GSD-III-FullText.wiki/` and fix every failing source-summary page.
-8. **Index gaps.** Pages that exist in the wiki but are not listed in `index_GSD-III-FullText.md`.
+8. **Index gaps.** The index is generated: run `python3 scripts/build-index.py wiki/GSD-III-FullText.wiki` instead of checking or editing it by hand.
 9. **Naming convention.** Page filenames should be `Title-Case-Hyphenated.md`. Flag deviations.
 10. **Special-file integrity.** `Home_…md`, `index_…md`, `log_…md`, `SCHEMA_…md`, `Home.md` (redirect) all present and well-formed.
 
@@ -26,12 +26,12 @@ Defer to `wiki/GSD-III-FullText.wiki/SCHEMA_GSD-III-FullText.md` for the precise
 
 ## Procedure
 
-1. Read `index_GSD-III-FullText.md` to get the canonical list of pages.
+1. List the pages with `ls wiki/GSD-III-FullText.wiki/*.md` (do not read the index: it is large and generated).
 2. List all `.md` files in the wiki directory.
 3. For each check above, scan systematically and collect findings.
 4. Report findings to the user grouped by check type, with one or two example pages per finding.
 5. Ask which findings to fix in this pass. Lint is incremental; not every issue needs to be addressed at once.
-6. For accepted fixes, apply them with cross-reference repair in both directions, update `index_GSD-III-FullText.md` as needed, and append a `## [YYYY-MM-DD] lint | Subject` entry to `log_GSD-III-FullText.md` describing what was cleaned up. The first bullet of that entry is the attribution line `- by: <name> via claude-code`, where `<name>` is the output of `git config user.name` in the wiki repo (read it, do not invent it). See "Log Entry Attribution" in `SCHEMA_GSD-III-FullText.md`.
+6. For accepted fixes, apply them with cross-reference repair in both directions, rebuild the index with `python3 scripts/build-index.py wiki/GSD-III-FullText.wiki`, and append a `## [YYYY-MM-DD] lint | Subject` entry to `log_GSD-III-FullText.md` describing what was cleaned up. The first bullet of that entry is the attribution line `- by: <name> via claude-code`, where `<name>` is the output of `git config user.name` in the wiki repo (read it, do not invent it). See "Log Entry Attribution" in `SCHEMA_GSD-III-FullText.md`.
 7. Optionally rebuild the knowledge graph: `./scripts/kg/build-graph.sh`.
 8. Commit in the wiki's own git repo in two steps: first stage and commit the lint fixes and index changes by name, then stage and commit the `log_GSD-III-FullText.md` entry on its own. One commit per log entry keeps `git blame` on the log a faithful per-entry record (see "Log Entry Attribution" in SCHEMA). Do not push unless asked. **When pushing, follow the procedure at `wiki/agents/wiki-write-protocol.md`** rather than plain `git push`.
 
